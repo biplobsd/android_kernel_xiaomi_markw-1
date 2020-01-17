@@ -380,6 +380,12 @@ config MACH_XIAOMI_DUMMY
 	help
 	  A stub configuration that doesn't enable support for anything.
 
+config MACH_XIAOMI_MARKW
+	bool "Redmi 4"
+	select MACH_XIAOMI_MSM8953
+	help
+	  This enables support for Xiaomi Redmi 4.
+
 config MACH_XIAOMI_MIDO
 	bool "Redmi Note 4(X)"
 	select MACH_XIAOMI_MSM8953
