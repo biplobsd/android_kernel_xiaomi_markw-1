@@ -109,11 +109,27 @@ static struct wcd_mbhc_config mbhc_cfg = {
 	.mono_stero_detection = false,
 	.swap_gnd_mic = NULL,
 	.hs_ext_micbias = false,
+#ifdef CONFIG_MACH_XIAOMI_MSM8953
+#ifdef CONFIG_MACH_XIAOMI_MIDO
 	.key_code[0] = KEY_MEDIA,
-#if (defined CONFIG_MACH_XIAOMI_MIDO) || (defined CONFIG_MACH_XIAOMI_TISSOT)
 	.key_code[1] = BTN_1,
 	.key_code[2] = BTN_2,
 	.key_code[3] = 0,
+	.key_code[4] = 0,
+	.key_code[5] = 0,
+	.key_code[6] = 0,
+	.key_code[7] = 0,
+#endif
+#ifdef CONFIG_MACH_XIAOMI_MARKW
+	.key_code[0] = KEY_MEDIA,
+	.key_code[1] = KEY_VOLUMEUP,
+	.key_code[2] = KEY_VOLUMEDOWN,
+	.key_code[3] = KEY_VOICECOMMAND,
+	.key_code[4] = 0,
+	.key_code[5] = 0,
+	.key_code[6] = 0,
+	.key_code[7] = 0,
+#endif
 #else
 	.key_code[1] = KEY_VOICECOMMAND,
 	.key_code[2] = KEY_VOLUMEUP,
@@ -1673,7 +1689,7 @@ static void *def_msm8952_wcd_mbhc_cal(void)
 		return NULL;
 
 #define S(X, Y) ((WCD_MBHC_CAL_PLUG_TYPE_PTR(msm8952_wcd_cal)->X) = (Y))
-#if (defined CONFIG_MACH_XIAOMI_MIDO) || (defined CONFIG_MACH_XIAOMI_TISSOT)
+#if defined(CONFIG_MACH_XIAOMI_MIDO) || defined(CONFIG_MACH_XIAOMI_MARKW)
 	S(v_hs_max, 1600);
 #else
 	S(v_hs_max, 1500);
@@ -1700,6 +1716,7 @@ static void *def_msm8952_wcd_mbhc_cal(void)
 	 * 210-290 == Button 2
 	 * 360-680 == Button 3
 	 */
+#ifdef CONFIG_MACH_XIAOMI_MSM8953
 #ifdef CONFIG_MACH_XIAOMI_MIDO
 	btn_low[0] = 73;
 	btn_high[0] = 73;
@@ -1711,6 +1728,19 @@ static void *def_msm8952_wcd_mbhc_cal(void)
 	btn_high[3] = 438;
 	btn_low[4] = 438;
 	btn_high[4] = 438;
+#endif
+#ifdef CONFIG_MACH_XIAOMI_MARKW
+	btn_low[0] = 25;
+	btn_high[0] = 75;
+	btn_low[1] = 200;
+	btn_high[1] = 225;
+	btn_low[2] = 325;
+	btn_high[2] = 450;
+	btn_low[3] = 500;
+	btn_high[3] = 510;
+	btn_low[4] = 530;
+	btn_high[4] = 540;
+#endif
 #else
 #ifdef CONFIG_MACH_XIAOMI_TISSOT
 	btn_low[0] = 91;
@@ -3508,6 +3538,9 @@ err:
 		}
 	}
 err1:
+#ifdef CONFIG_MACH_XIAOMI_MARKW
+	snd_soc_card_set_drvdata(card, NULL);
+#endif
 	devm_kfree(&pdev->dev, pdata);
 	return ret;
 }
