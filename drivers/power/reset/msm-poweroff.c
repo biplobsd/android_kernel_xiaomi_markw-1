@@ -1,4 +1,4 @@
-/* Copyright (c) 2013-2018, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2013-2017, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -203,12 +203,10 @@ static void set_dload_mode(int on)
 	return;
 }
 
-#if 0
 static void enable_emergency_dload_mode(void)
 {
 	pr_err("dload mode is not enabled on target\n");
 }
-#endif
 
 static bool get_dload_mode(void)
 {

@@ -587,4 +587,3 @@ struct sensor_init_cfg_data {
 	_IOWR('V', BASE_VIDIOC_PRIVATE + 14, struct msm_ois_cfg_download_data)
 
 #endif
-
