@@ -10,14 +10,25 @@
  * GNU General Public License for more details.
  */
 
-&firmware {
-	android {
-		fstab {
-			vendor {
-				dev = "/dev/block/platform/soc/7824900.sdhci/by-name/cust";
-			};
-		};
-	};
+/ {
+ 	firmware: firmware {
+ 		android {
+ 			fstab {
+ 				vendor {
+ 					dev = "/dev/block/platform/soc/7824900.sdhci/by-name/cust";
+ 					fsmgr_flags = "wait";
+ 				};
+ 				system {
+ 					compatible = "android,system";
+ 					dev = "/dev/block/platform/soc/7824900.sdhci/by-name/system";
+ 					type = "ext4";
+ 					mnt_flags = "ro,barrier=1,discard";
+ 					fsmgr_flags = "wait";
+ 					status = "ok";
+ 				};
+ 			};
+ 		};
+ 	};
 };
 
 &adv_vreg {
@@ -58,7 +69,7 @@
         pmi8950_fg: qcom,fg {
             qcom,resume-soc = <99>;
             qcom,fg-cutoff-voltage-mv = <3400>;
-            qcom,fg-cc-cv-threshold-mv = <4390>;	
+            qcom,fg-cc-cv-threshold-mv = <4390>;
             qcom,fg-vbat-estimate-diff-mv = <3200>;
             qcom,cold-bat-decidegc = <(0)>;
             qcom,cool-bat-decidegc = <(100)>;
@@ -361,7 +372,7 @@
 	};
 };
 
-&i2c_2  { 
+&i2c_2  {
 	aw2013@45 {
 		compatible = "awinc,aw2013";
 		reg = <0x45>;
